@@ -29,4 +29,4 @@ if __name__ == '__main__':
 
 
     webview.create_window("Biolytics", "http://127.0.0.1:5000",
-        resizable=True, fullscreen=True, confirm_quit=True)
+        resizable=True, width=1024, height=800, confirm_quit=True)
