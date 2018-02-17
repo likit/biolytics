@@ -16,7 +16,7 @@ app.register_blueprint(antibiogram_blueprint)
 
 @app.route('/')
 def index():
-    return render_template('antibiogram.html')
+    return render_template('index.html')
 
 
 @app.route('/upload', methods=['POST', 'GET'])
