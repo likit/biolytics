@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_uploads import UploadSet, configure_uploads
 
 app = Flask(__name__)
@@ -14,6 +14,15 @@ configure_uploads(app, (datafiles,))
 @app.route('/')
 def index():
     return render_template('antibiogram.html')
+
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
+    if 'POST' == request.method and 'datafile' in request.files:
+        filename = datafiles.save(request.files['datafile'])
+        return datafiles.url(filename)
+    return render_template('uploads.html')
+
 
 def run_server():
     app.run(host='127.0.0.1', port=5000, threaded=True)
