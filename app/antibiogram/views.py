@@ -1,5 +1,6 @@
+from flask import render_template
 from . import antibiogram as abg
 
 @abg.route('/')
 def index():
-    return '<h1>Antibiogram Page</h1>'
+    return render_template('antibiogram/index.html')
