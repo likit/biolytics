@@ -11,6 +11,9 @@ datafiles = UploadSet('datafiles', ('xlsx', 'csv', 'txt', 'tsv'))
 configure_uploads(app, (datafiles,))
 
 
+from antibiogram import antibiogram as antibiogram_blueprint
+app.register_blueprint(antibiogram_blueprint)
+
 @app.route('/')
 def index():
     return render_template('antibiogram.html')
