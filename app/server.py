@@ -1,7 +1,15 @@
 # -*- coding: utf8 -*-
+import os
 from flask import Flask, render_template
+from flask_uploads import UploadSet, configure_uploads
 
 app = Flask(__name__)
+
+rootdir = os.path.abspath(os.path.dirname(__file__))
+app.config['UPLOADED_DATAFILES_DEST'] = os.path.join(rootdir, 'uploads')
+datafiles = UploadSet('datafiles', ('xlsx', 'csv', 'txt', 'tsv'))
+configure_uploads(app, (datafiles,))
+
 
 @app.route('/')
 def index():
