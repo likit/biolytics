@@ -1,3 +1,6 @@
+activate_this = '/Users/likit/.virtualenvs/biolytics/bin/activate_this.py'
+exec(open(activate_this).read(), dict(__file__=activate_this))
+
 from time import sleep
 from threading import Thread
 
