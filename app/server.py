@@ -20,7 +20,7 @@ import models
 db.create_all()
 
 app.config['UPLOADED_DATAFILES_DEST'] = os.path.join(rootdir, 'uploads')
-datafiles = UploadSet('datafiles', ('xlsx', 'csv', 'txt', 'tsv'))
+datafiles = UploadSet('datafiles', ('xls', 'xlsx', 'csv', 'txt', 'tsv'))
 configure_uploads(app, (datafiles,))
 
 
