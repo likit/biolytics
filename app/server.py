@@ -1,4 +1,7 @@
 # -*- coding: utf8 -*-
+activate_this = '/Users/likit/.virtualenvs/biolytics/bin/activate_this.py'
+exec(open(activate_this).read(), dict(__file__=activate_this))
+
 import os
 import sqlite3
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +12,6 @@ app = Flask(__name__)
 
 rootdir = os.path.abspath(os.path.dirname(__file__))
 database_uri = 'sqlite:///{}'.format(os.path.join(rootdir, 'database.sqlite').replace('\\', '\\\\'))
-print(database_uri)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
