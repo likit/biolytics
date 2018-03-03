@@ -23,14 +23,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/upload', methods=['POST', 'GET'])
-def upload():
-    if 'POST' == request.method and 'datafile' in request.files:
-        filename = datafiles.save(request.files['datafile'])
-        return datafiles.url(filename)
-    return render_template('uploads.html')
-
-
 def run_server():
     app.run(host='127.0.0.1', port=5000, threaded=True)
 
