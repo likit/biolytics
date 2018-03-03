@@ -5,8 +5,21 @@
     <div class="box">
       <p>Supported formats: .txt, .csv, .tsv, .xls, .xlsx</p>
       <form enctype="multipart/form-data" method="post">
-        <input type="file" name="datafile">
-        <button type="submit" value="submit">Upload</button>
+        <div class="field">
+          <label class="label">Description</label>
+          <div class="control">
+            <textarea name="description" required></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Upload</label>
+          <div class="control">
+            <input type="file" name="datafile" required>
+          </div>
+        </div>
+        <div class="field">
+          <button type="submit" value="submit">Upload</button>
+        </div>
       </form>
     </div>
   </div>
