@@ -14,6 +14,10 @@ configure_uploads(app, (datafiles,))
 from antibiogram import antibiogram as antibiogram_blueprint
 app.register_blueprint(antibiogram_blueprint)
 
+from analytics import analytics as analytics_blueprint
+app.register_blueprint(analytics_blueprint)
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
