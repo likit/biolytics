@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block page_content %}
-<section>
+<section class="section">
   <div class="container">
-    <form enctype="multipart/form-data" method="post">
-      <input type="file" name="datafile">
-      <button type="submit" value="submit">Upload</button>
-    </form>
+    <div class="box">
+      <p>Supported formats: .txt, .csv, .tsv, .xls, .xlsx</p>
+      <form enctype="multipart/form-data" method="post">
+        <input type="file" name="datafile">
+        <button type="submit" value="submit">Upload</button>
+      </form>
+    </div>
   </div>
 </section>
+{% endblock %}
+{% block scripts %}
 {% endblock %}
