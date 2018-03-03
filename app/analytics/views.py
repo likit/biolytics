@@ -30,4 +30,4 @@ def inspect_data():
     if filename:
         datafile = os.path.join(app.config['UPLOADED_DATAFILES_DEST'], filename)
         df = pd.read_excel(datafile)
-    return jsonify(list(df.columns))
+    return render_template('analytics/inspect.html')

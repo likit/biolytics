@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block page_content %}
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <table id="myTable" class="display" width="100%"></table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    var dataset = [
+                    ["HN", "Text"],
+                    ["Received Date", "DateTime"],
+                    ["Isolate", "Text"]
+                ];
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            data: dataset,
+            columns: [
+                {title: 'name'},
+                {title: 'type'}
+                ]
+            });
+        });
+</script>
+{% endblock %}
