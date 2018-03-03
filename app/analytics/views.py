@@ -4,7 +4,8 @@ import pandas as pd
 from flask import render_template, jsonify, request, redirect, url_for
 
 from . import analytics
-from server import datafiles, app
+from server import datafiles, app, db
+from models import UploadedData
 
 ALLOWED_EXTENSIONS = set(['txt', 'csv', 'xls', 'xlsx'])
 
@@ -12,9 +13,15 @@ ALLOWED_EXTENSIONS = set(['txt', 'csv', 'xls', 'xlsx'])
 def upload():
     if 'POST' == request.method and 'datafile' in request.files:
         filename = datafiles.save(request.files['datafile'])
+        description = request.form['description']
+        upload = UploadedData(filename=filename, description=description)
+        db.session.add(upload)
+        db.session.commit()
         print('finished uploading..')
         return redirect(url_for('analytics.inspect_data', filename=filename))
-    return render_template('analytics/upload.html')
+    else:
+        all_uploads = UploadedData.query.all()
+    return render_template('analytics/upload.html', all_uploads=all_uploads)
 
 
 @analytics.route('/data/inspect/')

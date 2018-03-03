@@ -2,25 +2,50 @@
 {% block page_content %}
 <section class="section">
   <div class="container">
-    <div class="box">
-      <p>Supported formats: .txt, .csv, .tsv, .xls, .xlsx</p>
-      <form enctype="multipart/form-data" method="post">
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <textarea name="description" required></textarea>
-          </div>
+    <div class="columns">
+      <div class="column">
+        <div class="box">
+          <p>Supported formats: .txt, .csv, .tsv, .xls, .xlsx</p>
+          <form enctype="multipart/form-data" method="post">
+            <div class="field">
+              <label class="label">Description</label>
+              <div class="control">
+                <textarea name="description" required></textarea>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Upload</label>
+              <div class="control">
+                <input type="file" name="datafile" required>
+              </div>
+            </div>
+            <div class="field">
+              <button type="submit" value="submit">Upload</button>
+            </div>
+          </form>
         </div>
-        <div class="field">
-          <label class="label">Upload</label>
-          <div class="control">
-            <input type="file" name="datafile" required>
-          </div>
+      </div>
+      <div class="column">
+        <div class="box">
+          <p><strong>Uploaded Files</strong> <small>Click to inspect.</small></p>
+          <table class="table is-striped">
+            <tbody>
+            {% for file in all_uploads %}
+                <tr>
+                  <td>
+                    <span class="icon">
+                      <i class="fas fa-file-excel"></i>
+                    </span>
+                  </td>
+                  <td><a href="{{ url_for('analytics.inspect_data', filename=file.filename) }}">
+                    {{ file.filename }}</a></td>
+                    <td>{{ file.uploaded_date }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+          </table>
         </div>
-        <div class="field">
-          <button type="submit" value="submit">Upload</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>
