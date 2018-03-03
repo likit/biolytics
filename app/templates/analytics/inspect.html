@@ -3,7 +3,7 @@
 <section class="section">
     <div class="container">
         <div class="box">
-            <h3 data-bind="visible: doneLoading()">Please wait while the data is being inspected...</h3>
+            <h3 data-bind="visible: notDoneLoading()">Please wait while the data is being inspected...</h3>
             <table id="myTable" class="display" width="100%"></table>
         </div>
     </div>
@@ -29,12 +29,12 @@
         });
     var ViewModel = function() {
         var self = this;
-        self.doneLoading = ko.observable(false);
+        self.notDoneLoading = ko.observable(true);
     }
     var vm = new ViewModel();
     ko.applyBindings(vm);
-    $.get($SCRIPT_ROOT+'/analytics/api/inspect', {'datafile': {{datafile|tojson|safe}}).done(function(data) {
-        vm.doneLoading(true);
+    $.get($SCRIPT_ROOT+'/analytics/api/inspect', {'datafile': {{datafile|tojson|safe}} }).done(function(data) {
+        vm.notDoneLoading(false);
     });
 </script>
 {% endblock %}
