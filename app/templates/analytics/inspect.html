@@ -3,6 +3,7 @@
 <section class="section">
     <div class="container">
         <div class="box">
+            <h3 data-bind="visible: doneLoading()">Please wait while the data is being inspected...</h3>
             <table id="myTable" class="display" width="100%"></table>
         </div>
     </div>
@@ -11,6 +12,7 @@
 {% block scripts %}
 {{ super() }}
 <script type="text/javascript">
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     var dataset = [
                     ["HN", "Text"],
                     ["Received Date", "DateTime"],
@@ -25,5 +27,14 @@
                 ]
             });
         });
+    var ViewModel = function() {
+        var self = this;
+        self.doneLoading = ko.observable(false);
+    }
+    var vm = new ViewModel();
+    ko.applyBindings(vm);
+    $.get($SCRIPT_ROOT+'/analytics/api/inspect', {'datafile': {{datafile|tojson|safe}}).done(function(data) {
+        vm.doneLoading(true);
+    });
 </script>
 {% endblock %}

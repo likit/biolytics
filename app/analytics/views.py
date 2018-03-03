@@ -14,6 +14,7 @@ def upload():
     if 'POST' == request.method and 'datafile' in request.files:
         filename = datafiles.save(request.files['datafile'])
         description = request.form['description']
+        # need to handle failed upload
         upload = UploadedData(filename=filename, description=description)
         db.session.add(upload)
         db.session.commit()
@@ -29,5 +30,14 @@ def inspect_data():
     filename = request.args.get('filename', None)
     if filename:
         datafile = os.path.join(app.config['UPLOADED_DATAFILES_DEST'], filename)
+        return render_template('analytics/inspect.html', datafile=datafile, filename=filename)
+    return '<h1>No file was specified.</h1>'
+
+
+@analytics.route('/api/inspect')
+def api_inspect_data():
+    datafile = request.args.get('datafile', None)
+    print('inspecting file', datafile)
+    if datafile:
         df = pd.read_excel(datafile)
-    return render_template('analytics/inspect.html')
+        return jsonify({'status': 'success'})
