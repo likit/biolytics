@@ -4,7 +4,28 @@
     <div class="container">
         <div class="box">
             <h3 data-bind="visible: notDoneLoading()">Please wait while the data is being inspected...</h3>
-            <table id="myTable" class="display" width="100%"></table>
+            <table id="myTable" class="display" width="100%">
+              <thead>
+                <tr>
+                  <th>Column Name</th>
+                  <th>Data Type</th>
+                  <th>Number of Values</th>
+                  <th>
+                    <span class="icon">
+                      <i class="fas fa-check"></i>
+                    </span>Keep
+                  </th>
+                </tr>
+              </thead>
+              <tbody data-bind="foreach: headers">
+                <tr data-bind='css: {"has-text-grey-lighter": !$data[3]()}'>
+                  <td data-bind="text: $data[0]()"></td>
+                  <td data-bind="text: $data[1]()"></td>
+                  <td data-bind="text: $data[2]()"></td>
+                  <td><input type="checkbox" data-bind="checked: $data[3]"></td>
+                </tr>
+              </tbody>
+            </table>
         </div>
     </div>
 </section>
@@ -13,28 +34,23 @@
 {{ super() }}
 <script type="text/javascript">
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    var dataset = [
-                    ["HN", "Text"],
-                    ["Received Date", "DateTime"],
-                    ["Isolate", "Text"]
-                ];
-    $(document).ready(function() {
-        $('#myTable').DataTable({
-            data: dataset,
-            columns: [
-                {title: 'name'},
-                {title: 'type'}
-                ]
-            });
-        });
     var ViewModel = function() {
         var self = this;
         self.notDoneLoading = ko.observable(true);
+        self.headers = ko.observableArray([]);
     }
     var vm = new ViewModel();
     ko.applyBindings(vm);
     $.get($SCRIPT_ROOT+'/analytics/api/inspect', {'datafile': {{datafile|tojson|safe}} }).done(function(data) {
-        vm.notDoneLoading(false);
+      vm.notDoneLoading(false);
+      $.each(data, function(idx, d) {
+        var items = [];
+        $.each(d, function(i, item) {
+          items.push(ko.observable(item));
+        });
+        vm.headers.push(items);
+      });
+      var table = $('#myTable').DataTable();
     });
-</script>
+  </script>
 {% endblock %}
