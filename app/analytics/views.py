@@ -40,5 +40,8 @@ def api_inspect_data():
     print('inspecting file', datafile)
     if datafile:
         df = pd.read_excel(datafile)
-        print(df.head())
-        return jsonify({'status': 'success'})
+        data = []
+        for col in df.columns:
+            # colname, dtype, count, included
+            data.append([col, str(df[col].dtypes), int(df[col].count()), True])
+        return jsonify(data)
